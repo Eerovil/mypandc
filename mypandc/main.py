@@ -41,7 +41,10 @@ def read_scene(scene_id: int, db: Session = Depends(get_db)):
 
 @app.post("/scenes/{scene_id}/links/", response_model=schemas.SceneLink)
 def create_scene_link(
-        scene_id: int, scene_to_id: int, scene_link: schemas.SceneLinkCreate, db: Session = Depends(get_db)):
+        scene_id: int, scene_to_id: int,
+        scene_link: schemas.SceneLinkCreate, db: Session = Depends(get_db),
+        location_x: int=None, location_y: int=None, is_link_back: bool=False):        
     return crud.create_scene_link(
-        db, scene_link, scene_from_id=scene_id, scene_to_id=scene_to_id
+        db, scene_link, scene_from_id=scene_id, scene_to_id=scene_to_id,
+        location_x=location_x, location_y=location_y, is_link_back=is_link_back
     )

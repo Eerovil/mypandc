@@ -9,10 +9,15 @@ class Scene(Base):
     id = Column(Integer, primary_key=True, index=True)
     image = Column(String, index=True)
 
+    link_back_id = Column(Integer, ForeignKey("scene_links.id"), nullable=True)
+
     # This scene can be traversed forward via these links
     links = relationship("SceneLink", back_populates="scene_from", foreign_keys='SceneLink.scene_from_id')
     # This scene can be traversed to from these links
     links_from = relationship("SceneLink", back_populates="scene_to", foreign_keys='SceneLink.scene_to_id')
+    # A "back button" link
+    link_back = relationship("SceneLink", back_populates="scene_from", foreign_keys=[link_back_id])
+
 
 
 class SceneLink(Base):
@@ -23,8 +28,8 @@ class SceneLink(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    location_x = Column(Integer)
-    location_y = Column(Integer)
+    location_x = Column(Integer, nullable=True)
+    location_y = Column(Integer, nullable=True)
 
     # Scene we are coming from
     scene_from_id = Column(Integer, ForeignKey("scenes.id"), nullable=False)

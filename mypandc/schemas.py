@@ -14,8 +14,8 @@ class SceneLinkCreate(SceneLinkBase):
 class SceneLink(SceneLinkBase):
     id: int
 
-    location_x: int
-    location_y: int
+    location_x: Optional[int]
+    location_y: Optional[int]
 
     scene_from_id: int
     scene_to_id: int
@@ -36,6 +36,8 @@ class Scene(SceneBase):
     id: int
     links: List[SceneLink] = []
     links_from: List[SceneLink] = []
+
+    link_back: Optional[SceneLink]
 
     class Config:
         orm_mode = True
