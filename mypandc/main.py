@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -18,6 +19,9 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+app.mount("/static", StaticFiles(directory="mypandc/static"), name="static")
 
 
 @app.post("/scenes/", response_model=schemas.Scene)
