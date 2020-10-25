@@ -1,11 +1,11 @@
 <template>
-  <div class="wrapper">
+  <pinch-zoom class="wrapper">
     <div class="scene-image" v-if="image" v-bind:style="{ 'background-image': 'url(' + image + ')' }">
     <div class="link" v-for="link in links" :key="link.id" v-bind:style="{ 'top': link.location_y + 'px', 'left': link.location_x + 'px' }">
       <a @click="moveToScene(link.scene_to_id)">link</a>
     </div>
     </div>
-  </div>
+  </pinch-zoom>
 </template>
 
 <script>

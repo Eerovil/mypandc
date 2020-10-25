@@ -6,6 +6,10 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 
+Vue.config.ignoredElements = [
+  'pinch-zoom'
+]
+
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
