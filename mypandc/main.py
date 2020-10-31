@@ -7,8 +7,11 @@ from PIL import Image
 
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException, File, UploadFile
+from fastapi import Depends, FastAPI, HTTPException, File, UploadFile, Request
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -31,11 +34,22 @@ def get_db():
 
 
 app.mount("/static", StaticFiles(directory="mypandc/static"), name="static")
+app.mount("/js", StaticFiles(directory="mypandc/static/js"), name="js")
+app.mount("/css", StaticFiles(directory="mypandc/static/css"), name="css")
+templates = Jinja2Templates(directory="mypandc/static")
+
+@app.get("/")
+def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/scenes/", response_model=schemas.Scene)
 def create_scene(scene: schemas.SceneCreateWithImage, db: Session = Depends(get_db)):
     scene_dict = scene.dict()
+    try:
+        os.mkdir(os.path.join(dir_path, "static/images"))
+    except:
+        pass
     filename = "static/images/{}".format(str(scene_dict['filename']))
     del scene_dict['filename']
     img = io.BytesIO(base64.b64decode(scene.image.split(',')[1]))
