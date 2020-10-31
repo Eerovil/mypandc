@@ -30,7 +30,7 @@
     <label class="myLabel">
       <input @change="createScene($event)" type="file" required/>
       <span>Add</span>
-  </label>
+    </label>
   </div>
   </div>
   </div>
@@ -148,15 +148,15 @@ export default {
 .btn-create-scene {
 }
 
-label.myLabel input[type="file"] {
-    position:absolute;
-    top: -1000px;
-}
-
 .fixed-toolbar {
   position: fixed;
   top: 10px;
   left: 10px;
+}
+
+label.myLabel input[type="file"] {
+    position:absolute;
+    top: -1000px;
 }
 
 /***** Example custom styling *****/

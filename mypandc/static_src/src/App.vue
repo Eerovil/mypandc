@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <SceneViewer/>
+    <SceneViewer
+      v-if="currentScene"
+    />
+    <div v-if="!currentScene">
+      <label class="myLabel">
+        <input @change="createScene($event)" type="file" required/>
+        <span>Create scene</span>
+    </label>
+    </div>
   </div>
 </template>
 
@@ -11,6 +19,34 @@ export default {
   name: 'App',
   components: {
     SceneViewer
+  },
+  computed: {
+    currentScene() {
+      return this.$store.state.currentScene;
+    }
+  },
+  methods: {
+    toBase64: file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    }),
+    createScene(event) {
+      console.log(event)
+      const filename = event.srcElement.files[0].name
+      this.toBase64(event.srcElement.files[0]).then(file => {
+        this.axios.post(
+          '/scenes/',
+          {
+            filename: filename,
+            image: file,
+          }
+        ).then(resp => {
+          this.$store.commit('setCurrentScene', resp.data)
+        })
+      })
+    },
   },
   mounted() {
     this.axios.get('/scenes/1').then(response => {
@@ -24,5 +60,33 @@ export default {
 #app {
   width: 100%;
   height: 100vh;
+}
+
+label.myLabel input[type="file"] {
+    position:absolute;
+    top: -1000px;
+}
+
+/***** Example custom styling *****/
+.myLabel {
+
+    border: 2px solid #AAA;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin: 2px;
+    background: black;
+    display: inline-block;
+}
+.myLabel:hover {
+    background: #CCC;
+}
+.myLabel:active {
+    background: #CCF;
+}
+.myLabel :invalid + span {
+    color: #A44;
+}
+.myLabel :valid + span {
+    color: #4A4;
 }
 </style>
