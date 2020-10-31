@@ -4,7 +4,10 @@ from pydantic import BaseModel
 
 
 class SceneLinkBase(BaseModel):
-    pass
+    scene_to_id: int
+    location_x: Optional[int]
+    location_y: Optional[int]
+    is_link_back: bool = False
 
 
 class SceneLinkCreate(SceneLinkBase):
@@ -13,12 +16,7 @@ class SceneLinkCreate(SceneLinkBase):
 
 class SceneLink(SceneLinkBase):
     id: int
-
-    location_x: Optional[int]
-    location_y: Optional[int]
-
     scene_from_id: int
-    scene_to_id: int
 
     class Config:
         orm_mode = True
@@ -27,15 +25,20 @@ class SceneLink(SceneLinkBase):
 class SceneBase(BaseModel):
     image: str
 
-
 class SceneCreate(SceneBase):
-    pass
+    image_width: str
+    image_height: str
+
+class SceneCreateWithImage(SceneBase):
+    filename: str
 
 
 class Scene(SceneBase):
     id: int
     links: List[SceneLink] = []
     links_from: List[SceneLink] = []
+    image_width: str
+    image_height: str
 
     link_back: Optional[SceneLink]
 

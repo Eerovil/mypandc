@@ -1,11 +1,20 @@
+import io
+import base64
+import os
+from uuid import uuid4
+
+from PIL import Image
+
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, File, UploadFile
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -25,8 +34,22 @@ app.mount("/static", StaticFiles(directory="mypandc/static"), name="static")
 
 
 @app.post("/scenes/", response_model=schemas.Scene)
-def create_scene(scene: schemas.SceneCreate, db: Session = Depends(get_db)):
-    return crud.create_scene(db, scene)
+def create_scene(scene: schemas.SceneCreateWithImage, db: Session = Depends(get_db)):
+    scene_dict = scene.dict()
+    filename = "static/images/{}".format(str(scene_dict['filename']))
+    del scene_dict['filename']
+    img = io.BytesIO(base64.b64decode(scene.image.split(',')[1]))
+    with open(os.path.join(dir_path, filename), "wb") as fh:
+        fh.write(img.read())
+
+    image = Image.open(os.path.join(dir_path, filename))
+    width, height = image.size
+
+    scene_dict['image'] = filename
+    scene_dict['image_width'] = width
+    scene_dict['image_height'] = height
+
+    return crud.create_scene(db, schemas.SceneCreate(**scene_dict))
 
 
 @app.get("/scenes/", response_model=List[schemas.Scene])
@@ -45,10 +68,9 @@ def read_scene(scene_id: int, db: Session = Depends(get_db)):
 
 @app.post("/scenes/{scene_id}/links/", response_model=schemas.SceneLink)
 def create_scene_link(
-        scene_id: int, scene_to_id: int,
-        scene_link: schemas.SceneLinkCreate, db: Session = Depends(get_db),
-        location_x: int=None, location_y: int=None, is_link_back: bool=False):        
+        scene_id: int,
+        scene_link: schemas.SceneLinkCreate, db: Session = Depends(get_db)
+            ):
     return crud.create_scene_link(
-        db, scene_link, scene_from_id=scene_id, scene_to_id=scene_to_id,
-        location_x=location_x, location_y=location_y, is_link_back=is_link_back
+        db, scene_link, scene_from_id=scene_id
     )

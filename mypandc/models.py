@@ -8,6 +8,8 @@ class Scene(Base):
     __tablename__ = "scenes"
     id = Column(Integer, primary_key=True, index=True)
     image = Column(String, index=True)
+    image_width = Column(Integer)
+    image_height = Column(Integer)
 
     link_back_id = Column(Integer, ForeignKey("scene_links.id"), nullable=True)
 

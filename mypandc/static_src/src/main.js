@@ -21,6 +21,9 @@ const store = new Vuex.Store({
   mutations: {
     setCurrentScene(state, scene) {
       state.currentScene = scene;
+    },
+    addLinkToCurrentScene(state, link) {
+      state.currentScene.links.push(link);
     }
   }
 })

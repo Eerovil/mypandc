@@ -3,3 +3,5 @@ uvicorn
 sqlalchemy
 alembic
 aiofiles
+python-multipart
+Pillow
