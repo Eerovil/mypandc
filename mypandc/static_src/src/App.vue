@@ -49,7 +49,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get('/scenes/1').then(response => {
+    this.axios.get('/scenes/2').then(response => {
       this.$store.commit('setCurrentScene', response.data)
     })
   }
@@ -57,9 +57,14 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 label.myLabel input[type="file"] {

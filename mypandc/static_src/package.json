@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
-    "pinch-zoom-element": "^1.1.1",
+    "pinch-zoom-element": "https://github.com/Eerovil/pinch-zoom",
     "vue": "^2.6.11",
     "vue-axios": "^3.1.2",
     "vuex": "^3.5.1"

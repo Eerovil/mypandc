@@ -1,6 +1,10 @@
 <template>
-  <div>
-  <pinch-zoom class="wrapper">
+  <div class="wrapper">
+  <pinch-zoom ref="pinchzoom"
+      v-bind:style="{
+      'width': image.width + 'px',
+      'height': image.height + 'px',
+    }">
     <div
       class="scene-image"
       v-if="image"
@@ -132,22 +136,19 @@ export default {
         })
       })
     }
-  }
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.scene-image, .wrapper {
-  width: 100%;
-  height: 100%;
-}
 .link {
   position: absolute;
 }
-.btn-create-scene {
+.wrapper {
+  width: 100%;
+  height: 100%;
 }
-
 .fixed-toolbar {
   position: fixed;
   top: 10px;

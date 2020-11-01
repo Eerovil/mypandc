@@ -6940,6 +6940,12 @@ pinch-zoom-element@^1.1.1:
   dependencies:
     pointer-tracker "^2.0.3"
 
+"pinch-zoom-element@https://github.com/Eerovil/pinch-zoom":
+  version "1.1.1"
+  resolved "https://github.com/Eerovil/pinch-zoom#f5866785e19b4ea664997e06a5d8618ac54ab29b"
+  dependencies:
+    pointer-tracker "^2.0.3"
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"

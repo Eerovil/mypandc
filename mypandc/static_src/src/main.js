@@ -3,6 +3,7 @@ import App from './App.vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import 'pinch-zoom-element'
 
 Vue.config.productionTip = false
 
