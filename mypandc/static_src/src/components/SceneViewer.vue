@@ -87,7 +87,12 @@ export default {
     '$store.state.currentScene'() {
       console.log(this.$refs.pinchzoom)
       setTimeout(() => {
-        this.$refs.pinchzoom.scaleTo(0.001);
+        this.$refs.pinchzoom._onWheel({
+          deltaY: 10,
+          clientX: 0,
+          clientY: 0,
+          preventDefault: () => {},
+        });
       }, 100)
     }
   },
