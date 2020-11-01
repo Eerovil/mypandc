@@ -83,6 +83,14 @@ export default {
       return null;
     }
   },
+  watch: {
+    '$store.state.currentScene'() {
+      console.log(this.$refs.pinchzoom)
+      setTimeout(() => {
+        this.$refs.pinchzoom.scaleTo(0.001);
+      }, 100)
+    }
+  },
   methods: {
     moveToScene(scene_id) {
       this.axios.get('/scenes/' + scene_id).then(response => {
