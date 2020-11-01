@@ -5,10 +5,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'pinch-zoom-element'
 
+window.imageFileToBase64 =  require('image-file-to-base64-exif');
+
 Vue.config.productionTip = false
 
 Vue.config.ignoredElements = [
-  'pinch-zoom'
+  'pinch-zoom',
+  'imageFileToBase64'
 ]
 
 Vue.use(Vuex)

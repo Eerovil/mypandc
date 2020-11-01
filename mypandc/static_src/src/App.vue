@@ -26,16 +26,10 @@ export default {
     }
   },
   methods: {
-    toBase64: file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    }),
     createScene(event) {
       console.log(event)
       const filename = event.srcElement.files[0].name
-      this.toBase64(event.srcElement.files[0]).then(file => {
+      window.imageFileToBase64(event.srcElement.files[0]).then(file => {
         this.axios.post(
           '/scenes/',
           {
@@ -49,7 +43,7 @@ export default {
     },
   },
   mounted() {
-    this.axios.get('/scenes/2').then(response => {
+    this.axios.get('/scenes/1').then(response => {
       this.$store.commit('setCurrentScene', response.data)
     })
   }

@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "image-file-to-base64-exif": "^1.0.3",
     "pinch-zoom-element": "https://github.com/Eerovil/pinch-zoom",
     "vue": "^2.6.11",
     "vue-axios": "^3.1.2",

@@ -82,12 +82,6 @@ export default {
     }
   },
   methods: {
-    toBase64: file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    }),
     moveToScene(scene_id) {
       this.axios.get('/scenes/' + scene_id).then(response => {
         this.$store.commit('setCurrentScene', response.data)
@@ -96,7 +90,7 @@ export default {
     createScene(event) {
       console.log(event)
       const filename = event.srcElement.files[0].name
-      this.toBase64(event.srcElement.files[0]).then(file => {
+      window.imageFileToBase64(event.srcElement.files[0]).then(file => {
         this.uploadedFile = {
           filename,
           file
