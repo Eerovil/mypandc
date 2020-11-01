@@ -29,7 +29,7 @@ export default {
     createScene(event) {
       console.log(event)
       const filename = event.srcElement.files[0].name
-      window.getBase64Strings(event.srcElement.files).then(files => {
+      window.getBase64Strings(event.srcElement.files, { maxSize: 20240 }).then(files => {
         this.axios.post(
           '/scenes/',
           {
