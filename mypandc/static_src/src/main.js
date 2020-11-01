@@ -5,7 +5,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'pinch-zoom-element'
 
-window.imageFileToBase64 =  require('image-file-to-base64-exif');
+import { getBase64Strings } from 'exif-rotate-js/lib';
+window.getBase64Strings = getBase64Strings
 
 Vue.config.productionTip = false
 

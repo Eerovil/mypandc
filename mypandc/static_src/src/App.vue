@@ -29,12 +29,12 @@ export default {
     createScene(event) {
       console.log(event)
       const filename = event.srcElement.files[0].name
-      window.imageFileToBase64(event.srcElement.files[0]).then(file => {
+      window.getBase64Strings(event.srcElement.files).then(files => {
         this.axios.post(
           '/scenes/',
           {
             filename: filename,
-            image: file,
+            image: files[0],
           }
         ).then(resp => {
           this.$store.commit('setCurrentScene', resp.data)

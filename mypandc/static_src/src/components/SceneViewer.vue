@@ -69,7 +69,9 @@ export default {
       if (!this.currentScene) {
         return []
       }
-      return this.currentScene.links;
+      return this.currentScene.links.filter(
+        link => link.location_x > 0 || link.location_y > 0
+      );
     },
     adminMode() {
       return true;
@@ -90,10 +92,10 @@ export default {
     createScene(event) {
       console.log(event)
       const filename = event.srcElement.files[0].name
-      window.imageFileToBase64(event.srcElement.files[0]).then(file => {
+      window.getBase64Strings(event.srcElement.files).then((files) => {
         this.uploadedFile = {
           filename,
-          file
+          file: files[0],
         }
         document.querySelector('.scene-image').addEventListener('click', this.createLink)
       })
