@@ -19,7 +19,7 @@
       :key="link.id"
       v-bind:style="{ 'top': link.location_y + 'px', 'left': link.location_x + 'px' }"
       >
-      <a @click="moveToScene(link.scene_to_id)">link</a>
+      <a @click="moveToScene(link.scene_to_id)"><img src="/static/cute_bunny1.svg" width="20px" /></a>
     </div>
     </div>
   </pinch-zoom>
@@ -99,9 +99,10 @@ export default {
       })
     },
     createLink(event) {
+      const pinchzoom = this.$refs.pinchzoom;
       document.querySelector('.scene-image').removeEventListener('click', this.createLink);
-      const mouseX = event.x;
-      const mouseY = event.y;
+      const mouseX = (event.x - pinchzoom.x) / pinchzoom.scale;
+      const mouseY = (event.y - pinchzoom.y) / pinchzoom.scale;
       console.log(event)
       this.axios.post(
         '/scenes/',
