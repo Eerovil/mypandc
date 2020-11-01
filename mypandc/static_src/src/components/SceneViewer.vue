@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-  <pinch-zoom ref="pinchzoom"
+  <pinch-zoom ref="pinchzoom" class="pinchzoom"
       v-bind:style="{
       'width': image.width + 'px',
       'height': image.height + 'px',
@@ -74,7 +74,7 @@ export default {
       );
     },
     adminMode() {
-      return true;
+      return window.location.href.includes('?admin');
     },
     link_back() {
       if (this.currentScene) {
@@ -145,13 +145,16 @@ export default {
 .wrapper {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+.pinchzoom {
+  overflow: visible !important;
 }
 .fixed-toolbar {
   position: fixed;
   top: 10px;
   left: 10px;
 }
-
 label.myLabel input[type="file"] {
     position:absolute;
     top: -1000px;
